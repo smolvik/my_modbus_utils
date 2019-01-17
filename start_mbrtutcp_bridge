@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# setting for serial port
+SDEV=/dev/ttyUSB0
+BODERATE=115200
+# setting for tcp/ip connection
+IP=127.0.0.1
+PORT=1502
+# timeout modbus ms
+TIMEOUT=500
+
+if devport=$(./find_dev); then
+echo "device is found on $devport"
+else
+echo "ERROR device is'nt found"
+exit 1
+fi
+
+SDEV="/dev/$devport"
+
+# launch as demon
+#./mbrtutcp_bridge -d$SDEV -b$BODERATE -i$IP -p$PORT
+
+# launch in foreground mode
+./mbrtutcp_bridge -d$SDEV -b$BODERATE -i$IP -p$PORT -f

@@ -1,0 +1,19 @@
+#!/bin/bash
+
+ID="CP2104_USB_to_UART_Bridge_Controller"
+
+for i in 0 1 2 3 4 5 6 7 8 9 
+do
+    if udevadm info -n /dev/ttyUSB$i 2&>1 /dev/null; then 
+	name=$(udevadm info -n /dev/ttyUSB$i | sed -n "s/.*ID_MODEL=//p")
+	if [[ $name = $ID ]]; then
+	    echo "ttyUSB$i"
+	    exit 0
+	fi
+#    else
+#	break;
+    fi
+
+done
+
+exit 1
